@@ -10,7 +10,7 @@ A collection of Erlang and Elixir projects for [AtomVM](https://github.com/atomv
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [1. Deploy Docker Container](#1-deploy-docker-container)
-    - [2. Access Container & Erase Firmware](#2-access-container--erase-firmware)
+    - [2. Access Container \& Erase Firmware](#2-access-container--erase-firmware)
     - [3. Flash AtomVM Image](#3-flash-atomvm-image)
   - [Building and Flashing Applications](#building-and-flashing-applications)
     - [Erlang (Rebar3)](#erlang-rebar3)
@@ -30,7 +30,7 @@ A collection of Erlang and Elixir projects for [AtomVM](https://github.com/atomv
 | Directory | Description |
 |-----------|-------------|
 | `atomvm_image/` | Pre-built AtomVM firmware images (`.img`) for ESP32 |
-| `docker/` | Dockerfiles for building development environments (Ubuntu 18.04 / 20.04 / 22.04 / 24.04) |
+| `docker/` | Dockerfiles for building development environments (Ubuntu 18.04 / 20.04 / 22.04 / 24.04 / Debian 13) |
 | `example/` | Peripheral and feature demonstration programs (Erlang & Elixir) |
 | `projects/` | Full application projects (Erlang & Elixir) |
 
@@ -46,14 +46,14 @@ A collection of Erlang and Elixir projects for [AtomVM](https://github.com/atomv
 
 ```bash
 # Pull pre-built image
-docker pull biennguyen94/atomvm:ubuntu24_04_v2
+docker pull biennguyen94/atomvm:debian13_v1
 
 # Or build it yourself
-cd docker/24.04
+cd docker/debian-13
 docker build --network host -t <image_name> .
 
 # Run container
-docker run --privileged -v /dev/:/dev/ -d --name bien_atomvm -it biennguyen94/atomvm:ubuntu24_04_v2 bash
+docker run --privileged -v /dev/:/dev/ -d --name bien_atomvm -it biennguyen94/atomvm:debian13_v1 bash
 ```
 
 ### 2. Access Container & Erase Firmware
@@ -192,9 +192,12 @@ minicom -D /dev/ttyUSB0
 | `hour_glass/` | Hour glass game with motion sensing |
 | `self_balance_robot/` | Self-balancing robot |
 | `snake_blockbreaker/` | Snake and block breaker combo |
+| `snake_blockbreaker_clock/` | Snake + clock combo (Elixir-only example) |
 | `snake_game_2led/` | Snake game on 2 LED matrices |
+| `sntp_clock/` | SNTP-based clock example (Elixir-only) |
+| `sg90_servo/` | SG90 servo control example (Elixir-only) |
 
-All 7 Erlang projects have matching Elixir ports — the same applications reimplemented in Elixir.
+All Erlang projects have matching Elixir ports; the Elixir set also includes three additional projects: `snake_blockbreaker_clock`, `sntp_clock`, and `sg90_servo`.
 
 ## Available Firmware Images
 
