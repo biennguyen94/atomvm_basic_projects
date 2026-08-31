@@ -68,8 +68,7 @@ docker exec -it bien_atomvm bash
 ls /dev/ttyUSB0
 
 # Erase existing firmware
-python3 ${IDF_PATH}/components/esptool_py/esptool/esptool.py \
-    --chip esp32 --port /dev/ttyUSB0 --baud 115200 erase_flash
+esptool --chip esp32 --port /dev/ttyUSB0 --baud 115200 erase-flash
 ```
 
 ### 3. Flash AtomVM Image
@@ -77,20 +76,20 @@ python3 ${IDF_PATH}/components/esptool_py/esptool/esptool.py \
 Erlang
 ```bash
 cd /tools/atomvm_projects
-python3 ${IDF_PATH}/components/esptool_py/esptool/esptool.py \
+esptool \
     --chip esp32 --port /dev/ttyUSB0 --baud 115200 \
-    --before default_reset --after hard_reset \
-    write_flash -u --flash_mode dio --flash_freq 40m --flash_size detect \
+    --before default-reset --after hard-reset \
+    write-flash -u --flash-mode dio --flash-freq 40m --flash-size detect \
     0x1000 atomvm_image/AtomVM-esp32-v0.7.0-alpha.1.img
 ```
 
-Elixir
+Elixir--flash-freq
 ```bash
 cd /tools/atomvm_projects
-python3 ${IDF_PATH}/components/esptool_py/esptool/esptool.py \
+esptool \
     --chip esp32 --port /dev/ttyUSB0 --baud 115200 \
-    --before default_reset --after hard_reset \
-    write_flash -u --flash_mode dio --flash_freq 40m --flash_size detect \
+    --before default-reset --after hard-reset \
+    write-flash -u --flash-mode dio --flash-freq 40m --flash-size detect \
     0x1000 atomvm_image/AtomVM-esp32-elixir-v0.7.0-alpha.1.img
 ```
 
@@ -107,13 +106,6 @@ rebar3 atomvm packbeam
 
 # Flash to ESP32 (offset 0x210000)
 rebar3 atomvm esp32_flash --port /dev/ttyUSB0
-
-# Or manually with esptool:
-python3 ${IDF_PATH}/components/esptool_py/esptool/esptool.py \
-    --chip esp32 --port /dev/ttyUSB0 --baud 115200 \
-    --before default_reset --after hard_reset \
-    write_flash -u --flash_mode dio --flash_freq 40m --flash_size detect \
-    0x210000 _build/default/lib/hello_world.avm
 ```
 
 ### Elixir (Mix)
