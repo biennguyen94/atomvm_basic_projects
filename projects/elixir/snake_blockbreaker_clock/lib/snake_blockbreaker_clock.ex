@@ -56,7 +56,6 @@ defmodule SnakeBlockbreakerClock do
      - ADC > 3000 → start BlockBreaker2Led
      - Otherwise → sleep 100ms, retry
   4. When a game ends, it sends `:game_over` cast → re-run selection animation + poll loop
-  5. `select_game1/2` – same as `select_game/2`, called after a game ends
 
   ## Animation data
   - `@select_game_snake` – 40-frame bitmap sequence for snake icon on LED 0
@@ -440,7 +439,7 @@ defmodule SnakeBlockbreakerClock do
     GPIO.set_pin_pull(@gpio_sw, :up)
 
     setup_adc()
-    wait_for_sntp(60)
+    wait_for_sntp(120)
     show_clock(pid)
 
     start_animation(pid)
@@ -469,7 +468,7 @@ defmodule SnakeBlockbreakerClock do
   def handle_cast(:game_over, state) do
     IO.puts("parent game_over\n")
     new_proc = spawn(__MODULE__, :display_select_game, [self(), 0])
-    spawn(__MODULE__, :select_game1, [self(), @gpio_vrx])
+    spawn(__MODULE__, :select_game, [self(), @gpio_vrx])
     new_state = %{state | goverproc: new_proc}
     {:noreply, new_state}
   end
@@ -487,7 +486,7 @@ defmodule SnakeBlockbreakerClock do
   def handle_info({:clock_done}, state) do
     IO.puts("parent: clock done, starting game selection")
     new_proc = spawn(__MODULE__, :display_select_game, [self(), 0])
-    spawn(__MODULE__, :select_game1, [self(), @gpio_vrx])
+    spawn(__MODULE__, :select_game, [self(), @gpio_vrx])
     {:noreply, %{state | goverproc: new_proc}}
   end
 
@@ -530,25 +529,6 @@ defmodule SnakeBlockbreakerClock do
       true ->
         :timer.sleep(@delay_read_adc)
         select_game(pid, adcx)
-    end
-  end
-
-  def select_game1(pid, adcx) do
-    {:ok, x} = read_adc(adcx)
-    cond do
-      x < @low_range ->
-        send(pid, {self(), :do_select_game})
-        receive do
-          {:spi, spi} -> SnakeGame2Led.start(spi)
-        end
-      x > @high_range ->
-        send(pid, {self(), :do_select_game})
-        receive do
-          {:spi, spi} -> BlockBreaker2Led.start(spi)
-        end
-      true ->
-        :timer.sleep(@delay_read_adc)
-        select_game1(pid, adcx)
     end
   end
 

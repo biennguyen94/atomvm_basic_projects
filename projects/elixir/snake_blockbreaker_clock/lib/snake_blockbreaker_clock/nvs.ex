@@ -24,8 +24,8 @@ defmodule SnakeBlockbreakerClock.NVS do
   Edit `@wifi_ssid` and `@wifi_passphrase` below to match your network.
   """
 
-  @wifi_ssid "Bien nefff"
-  @wifi_passphrase "123456780"
+  @wifi_ssid "wifi_name"
+  @wifi_passphrase "password"
 
   def get_binary(:wifi_ssid), do: @wifi_ssid
   def get_binary(:wifi_passphrase), do: @wifi_passphrase
