@@ -158,6 +158,7 @@ minicom -D /dev/ttyUSB0
 | `Mpu6500/` | MPU6500 sensor |
 | `esp32_temp/` | ESP32 temperature sensor |
 | `mpu6500_web_temp/` | MPU6500 sensor with web interface |
+| `sg90_servo/` | SG90 servo control example |
 | `hello_atomvm_disterl_wifi/` | Wi-Fi + distributed Erlang messaging *(empty/placeholder)* |
 
 ## Projects
@@ -187,9 +188,8 @@ minicom -D /dev/ttyUSB0
 | `snake_blockbreaker_clock/` | Snake + clock combo (Elixir-only example) |
 | `snake_game_2led/` | Snake game on 2 LED matrices |
 | `sntp_clock/` | SNTP-based clock example (Elixir-only) |
-| `sg90_servo/` | SG90 servo control example (Elixir-only) |
 
-All Erlang projects have matching Elixir ports; the Elixir set also includes three additional projects: `snake_blockbreaker_clock`, `sntp_clock`, and `sg90_servo`.
+All Erlang projects have matching Elixir ports; the Elixir set also includes additional examples such as `snake_blockbreaker_clock` and `sntp_clock`.
 
 ## Available Firmware Images
 

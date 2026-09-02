@@ -27,7 +27,7 @@ defmodule SnakeBlockbreakerClock.DistErl do
   On a remote Erlang node with the same cookie `"AtomVM"`:
   ```
   # Set snake game speed (200 = fast, 1000 = slow)
-  send({:snake_speed, :'biennguyen@192.168.1.100'}, {:set_speed, 500})
+  send({:snake_speed, :'biennguyen@192.168.1.250'}, {:set_speed, 500})
   ```
   """
 
